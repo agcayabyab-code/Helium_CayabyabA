@@ -1,0 +1,54 @@
+a. If name is “Joseph The Dreamer” and nChar is 5, what will be the output of the code above and why?
+Output:
+j
+o
+s
+e
+p
+This is the output because it prints only the first 5 characters and prints them on separate ines. 
+b. Using the same name and nChar is 20, what now is the output and why?
+It results in an error because Joseph The Dreamer has less than 20 characters.
+c. If there is an error message encountered in letter b, how will you be able to modify the code so that the error message will not appear.
+An if statement will check if the number entered is out of range. If it is, the nChar will automatically be set to the length of the string Name.
+
+Code #2
+
+a. Find the syntax error and modify it.  Please identify the error and what did you do to fix it?
+There was a missing colon. I added the missing colon to line 2
+b. The code should be able to display a given name as an inverted triangle, please fix the code in order for it to do that.  See sample output below if entered name is Joseph
+def greet_students(name, nChar):
+    for i in range(nChar):
+        print(name[ 0 : nChar ])
+        nChar -= 1<<modification to print triangle
+        
+
+name = input("Enter your name: ")
+greet_students(name, len(name))
+
+Code #3
+Given the following line of code, create the needed function to compute the sum of all squared numbers from 1 to max.
+n=0 
+def sum_of_squared(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += i**2
+    return sum
+
+while n<1 or n>100:
+    n = 100
+
+print(f"Sum of all squared numbers is {sum_of_squared(n)}")
+
+a. You are tasked to create the needed function/s that will return the sum of all squared numbers from 1 to n.
+n=0 
+def sum_of_squared(n):
+    sum = 0
+    for i in range(1, n+1):
+        sum += i**2
+    return sum
+
+while n<1 or n>100:
+    n = input("Enter a number from 1 to 100: ")
+    n = int(n)
+
+print(f"Sum of all squared numbers is {sum_of_squared(n)}")

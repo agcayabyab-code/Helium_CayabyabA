@@ -64,7 +64,7 @@ c1.qty.buy(c1, 1)
 
 c2 = Car("Toyota", "Supra Mk-4", "1994")
 c2.qty.add_car(c2, 12)
-c2.price.set_price(250)
+c2. n.set_price(250)
 s.add_cars(c2)
 
 c3 = Car("Isuzu", "D-Max", "2025")

@@ -52,3 +52,8 @@ p1 = Plane("Boeing 747", 416, 614, 8000)
 p1.price.set_price(130000000)
 p1.stock.add_plane(p1, 5)
 p1.print_plane_info()
+
+p2 = Plane("Airbus A380", 853, 1020, 15200)
+p2.price.set_price(445000000)
+p2.stock.add_plane(p2, 3)
+p2.print_plane_info()

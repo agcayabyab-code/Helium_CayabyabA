@@ -13,7 +13,9 @@ class Beaker(Glassware):
 
 class Tray:
     def __init__(self):
-        self.beakers = Beaker(250) for _ in range(5)
+        self.beakers = []
+        for _ in range(5):
+            self.beakers.append(Beaker(250))
 
     def print_contents(self):
 

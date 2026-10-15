@@ -1,10 +1,11 @@
 import datetime
 import random
 class Airport:
-    def __init__(self, name, code, city):
+    def __init__(self,country, name, code, city):
         self.name = name
         self.code = code
         self.city = city
+        self.country = country
         self.max_plane_capacity = 50
         self.current_plane_count = 0
 
@@ -59,41 +60,48 @@ class Flight:
         chance_of_failure = 10  # 10% chance of failure
         if random.randint(1, 100) <= chance_of_failure:
             self.diverted = True
-            print(f"{self.airline} Flight {self.flight_number} has experienced a failure. The flight will divert to {new_destination.get_info()}.")
+            print(f"{self.airline} Flight {self.flight_number} has experienced a failure")
+            self.divert(new_destination)
             self.destination = self.origin
 
-    def request_takeoff(self):
-        if self.origin.current_plane_count < self.origin.max_plane_capacity:
+    def request_takeoff(self, atc):
+        print(f"{self.airline} Flight {self.flight_number}, requesting takeoff from {self.origin.get_info()}.")
+        if atc.clear_for_takeoff(self):
             self.origin.current_plane_count += 1
             print(f"{self.airline} Flight {self.flight_number} has been cleared for takeoff from {self.origin.get_info()}.")
         else:
             print(f"{self.airline} Flight {self.flight_number} cannot take off. {self.destination.get_info()} has reached its maximum plane capacity.")
 
-class ATC:
+class ATC(Airport):
     def __init__(self, airport):
         self.airport = airport
 
     def clear_for_takeoff(self, flight):
-        if flight.diverted:
-            print(f"ATC: {flight.airline} Flight {flight.flight_number} is diverting to {flight.destination.get_info()}.")
+        if flight.origin.current_plane_count == flight.origin.capacity:
+            flight.can_take_off = False
+            print(f"ATC: {flight.airline} {flight.flight_number} cannot take off from {flight.origin.get_info()}. The runway is occupied.")
         else:
-            print(f"ATC: {flight.airline} Flight {flight.flight_number} is on schedule to land at {flight.destination.get_info()}.")
+            flight.can_take_off = True
+            print(f"ATC: {flight.airline} {flight.flight_number}, cleared for takeoff from {flight.origin.get_info()}.")
+            return True
 
     def clear_for_landing(self, flight):
         if flight.destination.current_plane_count == flight.destination.capacity:
+            flight.can_land = False
             print(f"ATC: {flight.airline} {flight.flight_number} cannot land at {flight.destination.get_info()}. The airport is occupied.")
         else:
-            print(f"ATC: {flight.airline} {flight.flight_number} is cleared to land at {flight.destination.get_info()}.")
+            flight.can_land = True
+            print(f"ATC: {flight.airline} {flight.flight_number}, cleared to land at {flight.destination.get_info()}.")
 
-naia = Airport("Ninoy Aquino International Airport", "MNL", "Manila")
-mactan = Airport("Mactan-Cebu International Airport", "CEB", "Cebu City")
-jfk = Airport("John F. Kennedy International Airport", "JFK", "New York City")
-lax = Airport("Los Angeles International Airport", "LAX", "Los Angeles")
-ohare = Airport("O'Hare International Airport", "ORD", "Chicago")
-haneda = Airport("Haneda Airport", "HND", "Tokyo")
-narita = Airport("Narita International Airport", "NRT", "Tokyo")
-kansai = Airport("Kansai International Airport", "KIX", "Osaka")
-kai_tak = Airport("Kai Tak Airport", "HKG", "Hong Kong")
+naia = Airport("Philippines", "Ninoy Aquino International Airport", "MNL", "Manila")
+mactan = Airport("Philippines", "Mactan-Cebu International Airport", "CEB", "Cebu City")
+jfk = Airport("United States", "John F. Kennedy International Airport", "JFK", "New York City")
+lax = Airport("United States", "Los Angeles International Airport", "LAX", "Los Angeles")
+ohare = Airport("United States", "O'Hare International Airport", "ORD", "Chicago")
+haneda = Airport("Japan", "Haneda Airport", "HND", "Tokyo")
+narita = Airport("Japan", "Narita International Airport", "NRT", "Tokyo")
+kansai = Airport("Japan", "Kansai International Airport", "KIX", "Osaka")
+kai_tak = Airport("Hong Kong", "Kai Tak Airport", "HKG", "Hong Kong")
 
 pal125 = Flight("PR125", naia, mactan, "2024-06-15 08:00", "2024-06-15 09:30", "Philippine Airlines")
 
@@ -112,7 +120,5 @@ jal135 = Flight("JL135", haneda, narita, "2024-06-15 14:00", "2024-06-15 15:30",
 jal135.take_off()
 print(jal135.get_flight_info())
 jal135.failure(kansai)
-if jal135.diverted:
-    jal135.divert(kansai)
 jal135.land()
 print()

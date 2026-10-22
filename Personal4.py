@@ -101,7 +101,7 @@ ohare = Airport("United States", "O'Hare International Airport", "ORD", "Chicago
 haneda = Airport("Japan", "Haneda Airport", "HND", "Tokyo")
 narita = Airport("Japan", "Narita International Airport", "NRT", "Tokyo")
 kansai = Airport("Japan", "Kansai International Airport", "KIX", "Osaka")
-kai_tak = Airport("Hong Kong", "Kai Tak Airport", "HKG", "Hong Kong")
+danang = Airport("Vietnam", "Da Nang International Airport", "DAD", "Da Nang")
 
 pal125 = Flight("PR125", naia, mactan, "2024-06-15 08:00", "2024-06-15 09:30", "Philippine Airlines")
 
